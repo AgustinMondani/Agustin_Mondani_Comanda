@@ -38,7 +38,7 @@ class Venta{
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         
-        $consultaVentas = $objAccesoDatos->prepararConsulta("SELECT producto, id_usuario, codigo, cantidad, demora, estado FROM venta WHERE  id_usuario IS NULL");
+        $consultaVentas = $objAccesoDatos->prepararConsulta("SELECT id, producto, id_usuario, codigo, cantidad, demora, estado FROM venta WHERE  id_usuario IS NULL");
         $consultaVentas->execute();
         $ventas = $consultaVentas->fetchAll(PDO::FETCH_CLASS, 'Venta');
         $resultadosFiltrados = [];
@@ -51,7 +51,6 @@ class Venta{
             
             $producto = $consultaProducto->fetch(PDO::FETCH_ASSOC);
             
-          
             if ($producto) {
                 $resultadosFiltrados[] = $venta;
             }
@@ -59,5 +58,53 @@ class Venta{
         
         return $resultadosFiltrados;
     }
+
+    public static function preparar($id, $rol, $demora, $id_usuario) {
+
+        if(Venta::enPreparcion($id)){
+            return json_encode(['Error' => 'Ya se encuentra en preparacion']);
+        }
+
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT producto FROM venta WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->execute();
+        $producto = $consulta->fetch(PDO::FETCH_ASSOC);
     
+        if (!$producto) {
+            return json_encode(['Error' => 'No se encontró el producto']);
+        }
+    
+        $nombreProducto = $producto['producto'];
+        $consultaArea = $objAccesoDatos->prepararConsulta("SELECT area_preparacion FROM producto WHERE nombre = :nombreProducto");
+        $consultaArea->bindValue(':nombreProducto', $nombreProducto, PDO::PARAM_STR);
+        $consultaArea->execute();
+        $producto = $consultaArea->fetch(PDO::FETCH_ASSOC);
+    
+        if ($producto['area_preparacion'] != $rol) {
+            return json_encode(['Error' => 'Usted no está autorizado para realizar esta tarea']);
+        }
+    
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE venta SET estado = 'en preparación', demora = :demora, id_usuario = :id_usuario WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':demora', $demora, PDO::PARAM_INT);
+        $consulta->execute();
+    
+        return json_encode(['Exito' => 'Pedido en preparación']);
+    }
+    
+    public static function enPreparcion($id){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT estado FROM venta WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->execute();
+        $venta = $consulta->fetch(PDO::FETCH_ASSOC);
+
+        if($venta['estado'] == "en preparación"){
+            return true;
+        }
+        return false;
+    }
 }    

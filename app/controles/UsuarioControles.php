@@ -1,5 +1,7 @@
 <?php
 
+use Slim\Psr7\Request;
+
 require_once 'modelos/Usuario.php';
 require_once 'interfaces/IApiUsable.php';
 
@@ -7,13 +9,15 @@ class UsuarioControles extends Usuario implements IApiUsable{
     
     public function CargarUno($request, $response, $args)
     {
+        $roles = array("mozo", "cervecero", "cocinero", "bartender","socio");
         $parametros = $request->getParsedBody();
 
         $nombre = $parametros['nombre'];
         $clave = $parametros['clave'];
         $tipo = $parametros['tipo'];
 
-        // Creamos el usuario
+        if(!Usuario::existeUsuario($nombre) &&  in_array($tipo, $roles)){
+
         $usuario = new Usuario();
         $usuario->nombre = $nombre;
         $usuario->clave = $clave;
@@ -23,8 +27,11 @@ class UsuarioControles extends Usuario implements IApiUsable{
 
         $usuario->altaUsuario();
 
-        $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
-
+        $payload = json_encode(array("Exito" => "Usuario creado con exito"));
+        }
+        else{
+            $payload = json_encode(array("Error" => "Usuario ya existente o rol incorrecto"));
+        }
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
@@ -37,5 +44,17 @@ class UsuarioControles extends Usuario implements IApiUsable{
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
+    }
+
+    public function ComezarAPreparar($request, $response, $args){
+        $rol = $request->getAttribute('rol');
+        $id_usuario = $request->getAttribute('id');
+        $parametros = $request->getParsedBody();
+        $demora = $parametros['demora'];
+        $id = $parametros['id'];
+
+        $payload = Venta::preparar($id, $rol, $demora, $id_usuario);
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

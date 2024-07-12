@@ -10,13 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
-require __DIR__ . '/../vendor/autoload.php';
-require_once './controles/UsuarioControles.php';
-require_once './controles/ProductoControles.php';
-require_once './controles/OrdenControles.php';
-require_once './controles/VentaControles.php';
-require_once './controles/MesaControles.php';
-require_once './base_datos/AccesoDatos.php';
+require_once './requires.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -24,36 +18,40 @@ $dotenv->load();
 
 $app = AppFactory::create();
 
+$app->addErrorMiddleware(true, true, true);
 
-$app->get('/', function ($request, $response, array $args) {
-		$response->getBody()->write("Funciona!");
-return $response;
+$app->group('/login', function (RouteCollectorProxy $group) {
+  $group->post('[/]', \JwtControles::class . ':TokenLogin');
 });
-
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioControles::class . ':TraerTodos');
     $group->post('[/]', \UsuarioControles::class . ':CargarUno');
-  });
+  })->add(new AccesoMiddleware(["socio"]));;
 
 $app->group('/producto', function (RouteCollectorProxy $group) {
   $group->get('[/]', \ProductoControles::class . ':TraerTodos');
-  $group->post('[/]', \ProductoControles::class . ':CargarUno');
-  //$group->get('/{id}', \ProductoControles::class . ':TraerUno');
+  $group->post('[/]', \ProductoControles::class . ':CargarUno')->add(new AccesoMiddleware(["socio", "cocinero"]));
 });
 
 $app->group('/orden', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \OrdenControles::class . ':TraerTodos');
-  $group->post('[/]', \OrdenControles::class . ':CargarUno');
-});
-
-$app->group('/mesa', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \MesaControles::class . ':TraerTodos');
-  $group->post('[/]', \MesaControles::class . ':CargarUno');
+  $group->get('[/]', \OrdenControles::class . ':TraerTodos')->add(new AccesoMiddleware(["socio", "mozo"]));;
+  $group->post('[/]', \OrdenControles::class . ':CargarUno')->add(new AccesoMiddleware(["mozo"]));
 });
 
 $app->group('/ventas', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \VentaControles::class . ':TraerTodos');
+  $group->get('[/]', \VentaControles::class . ':TraerTodos')->add(new AccesoMiddleware(["socio"]));
+  $group->get('/rol', \VentaControles::class . ':TraerVentasRol')->add(new RolMiddleware());
+});
+
+$app->group('/preparar', function (RouteCollectorProxy $group) {
+  $group->post('[/]', \UsuarioControles::class . ':ComezarAPreparar')->add(new RolMiddleware());
+});
+
+$app->group('/descargar', function (RouteCollectorProxy $group) {
+  $group->get('[/]', function ($request, $response, $args){
+    return descargarCSV($request, $response, $args);
+  })->add(new AccesoMiddleware(["socio"]));
 });
 
 $app->run();

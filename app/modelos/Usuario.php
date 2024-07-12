@@ -32,4 +32,27 @@ class Usuario{
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
-}    
+
+    public static function existeUsuario($nombre){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id FROM usuario WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+        $consulta->execute();
+
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function validacionUsuario($usuario, $contraseña){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, clave, tipo FROM usuario WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $usuario, PDO::PARAM_STR);
+        $consulta->execute();
+        $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+        
+        if ($usuario && password_verify($contraseña, $usuario['clave'])) {
+            return $usuario;
+        } else {
+            return false;
+        }
+    }
+}

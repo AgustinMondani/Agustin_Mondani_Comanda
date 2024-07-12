@@ -9,19 +9,24 @@ class OrdenControles extends Orden implements IApiUsable{
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-        
 
-        $codigo = $parametros['codigo'];
+        $codigo = Orden::generarCodigo();
         $id_mesa = $parametros['id_mesa'];
         $productos = $parametros['productos'];
         $cliente_nombre = $parametros['cliente_nombre'];
 
-        //midelware de validacion de #existencia de productos
-        //asignacion de tareas a las comandas
         $productos = json_decode($productos, true);
 
         if (json_last_error() === JSON_ERROR_NONE && is_array($productos)) {
-            // Procesar cada producto
+            
+            foreach ($productos as $producto) {
+                if(!Producto::existe($producto['producto'])){
+                    $payload = json_encode(array("Error" => "Pedidos incorrectos"));
+                    $response->getBody()->write($payload);
+                    return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+                }
+            }
+
             foreach ($productos as $producto) {
                 $venta = new Venta();
                 $venta->producto = $producto["producto"];
@@ -32,8 +37,7 @@ class OrdenControles extends Orden implements IApiUsable{
                 $venta->altaVenta();
             }
         } else {
-            // Manejar el error en caso de que la decodificación falle
-            $payload = json_encode(array("error" => "Formato de productos inválido"));
+            $payload = json_encode(array("Error" => "Formato de productos inválido"));
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
@@ -41,14 +45,13 @@ class OrdenControles extends Orden implements IApiUsable{
         $orden = new Orden();
         $orden->codigo = $codigo;
         $orden->id_mesa = (int)$id_mesa;
-        $orden->id_mozo = 0; #"asignar el id del mozo que toma el pedido";
-        $orden->estado = "espera"; // hardcodeado para probar la db
+        $orden->estado = "Esperando";
         $orden->hora_pedido = date('H:i:s');
         $orden->cliente_nombre = $cliente_nombre;
         $orden->altaOrden();
 
-        $payload = json_encode(array("mensaje" => "Orden creado con exito"));
-
+        $payload = json_encode(array("Exito" => "Orden creado con exito",
+                                    "Codigo De Orden" => $codigo));
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

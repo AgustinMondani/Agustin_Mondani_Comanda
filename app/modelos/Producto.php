@@ -22,10 +22,10 @@ class Producto{
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, precio, area_preparacion FROM producto");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT nombre, precio FROM producto");
         $consulta->execute();
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function obtenerProducotID($id)
@@ -36,5 +36,33 @@ class Producto{
         $consulta->execute();
 
         return $consulta->fetchObject('Producto');
+    }
+
+    public static function existeYActualizar($params)
+    {
+        
+        if($producto = Producto::existe($params['nombre'])){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE producto SET precio = :precio, area_preparacion = :area_preparacion WHERE id = :id");
+            $consulta->bindValue(':precio', $params['precio'], PDO::PARAM_INT);
+            $consulta->bindValue(':area_preparacion', $params['area_preparacion'], PDO::PARAM_STR);
+            $consulta->bindValue(':id', $producto['id'], PDO::PARAM_INT);
+            $consulta->execute();
+
+            return true;
+        }
+        return false;
+    }
+
+    public static function existe($nombre)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM producto WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+        $consulta->execute();
+        $producto = $consulta->fetch(PDO::FETCH_ASSOC);
+
+        return $producto;
     }
 }    

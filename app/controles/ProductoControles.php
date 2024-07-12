@@ -7,20 +7,30 @@ class ProductoControles extends Producto implements IApiUsable{
     
     public function CargarUno($request, $response, $args)
     {
+        $areas = array("bartender", "cervecero", "cocinero");
         $parametros = $request->getParsedBody();
 
         $nombre = $parametros['nombre'];
         $precio = $parametros['precio'];
         $area_preparacion = $parametros['area_preparacion'];
 
-        // Creamos el Producto
-        $producto = new Producto();
-        $producto->nombre = $nombre;
-        $producto->precio = (int)$precio;
-        $producto->area_preparacion = $area_preparacion;
-        $producto->altaProducto();
+        if(is_numeric($precio) && floatval($precio) > 0 && in_array($area_preparacion, $areas)){
+            if(Producto::existeYActualizar($parametros)){
+                $payload = json_encode(array("Exito" => "Prducto existente y actualizado"));
+            }
+            else{
+                $producto = new Producto();
+                $producto->nombre = $nombre;
+                $producto->precio = (int)$precio;
+                $producto->area_preparacion = $area_preparacion;
+                $producto->altaProducto();
 
-        $payload = json_encode(array("mensaje" => "Producto creado con exito"));
+                $payload = json_encode(array("Exito" => "Producto creado con exito"));
+            }
+        }
+        else{
+            $payload = json_encode(array("Error" => "Precio o Area de Preparacion Incorrecta"));
+        }
 
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
@@ -29,21 +39,11 @@ class ProductoControles extends Producto implements IApiUsable{
     public function TraerTodos($request, $response, $args)
     {
         $lista = Producto::obtenerTodos();
-        $payload = json_encode(array("listaProductos" => $lista));
+        $payload = json_encode(array("Carta" => $lista));
 
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
     
-    public function TraerUno($request, $response, $args)
-    {
-        $producto_id = (int)$args['id'];
-        $producto = Producto::obtenerProducotID($producto_id);
-        $payload = json_encode($producto);
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
 }

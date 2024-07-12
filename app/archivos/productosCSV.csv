@@ -1,0 +1,16 @@
+id,nombre,precio,area_preparacion
+1,milanesa,7500,cocinero
+2,campari,8000,bartender
+3,honney,8000,cervecero
+4,golden,8000,cervecero
+5,ipa,8000,cervecero
+6,apa,8000,cervecero
+7,fernet,9000,bartender
+8,beefeater,12000,bartender
+9,caipirinha,12000,bartender
+10,brownie,12000,cocinero
+11,ravioles,9000,cocinero
+12,canelones,15000,cocinero
+15,rabas,15000,cocinero
+30,"papas fritas",5000,cocinero
+31,pizza,15000,cocinero
