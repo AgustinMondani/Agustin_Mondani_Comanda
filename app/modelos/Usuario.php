@@ -24,6 +24,17 @@ class Usuario{
         return $objAccesoDatos->obtenerUltimoId();
     }
 
+    public static function modificarUsuario($nombre, $estado, $tipo){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET estado = :estado, tipo = :tipo WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo', $tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
+        $consulta->execute();
+
+        return $consulta->rowCount();
+    }
+
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();

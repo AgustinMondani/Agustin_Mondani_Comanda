@@ -17,8 +17,7 @@ class Mesa{
         return $objAccesoDatos->obtenerUltimoId();
     }
 
-    public static function obtenerTodos()
-    {
+    public static function obtenerTodos()    {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, estado, numero FROM mesa");
         $consulta->execute();

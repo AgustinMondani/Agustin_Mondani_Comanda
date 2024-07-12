@@ -65,4 +65,14 @@ class Producto{
 
         return $producto;
     }
+
+    public static function descargarTodos()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM producto");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }    

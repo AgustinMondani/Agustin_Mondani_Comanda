@@ -27,7 +27,8 @@ $app->group('/login', function (RouteCollectorProxy $group) {
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioControles::class . ':TraerTodos');
     $group->post('[/]', \UsuarioControles::class . ':CargarUno');
-  })->add(new AccesoMiddleware(["socio"]));;
+    $group->post('/modificar', \UsuarioControles::class . ':ModificarUno');
+  })->add(new AccesoMiddleware(["socio"]));
 
 $app->group('/producto', function (RouteCollectorProxy $group) {
   $group->get('[/]', \ProductoControles::class . ':TraerTodos');
@@ -42,6 +43,11 @@ $app->group('/orden', function (RouteCollectorProxy $group) {
 $app->group('/ventas', function (RouteCollectorProxy $group) {
   $group->get('[/]', \VentaControles::class . ':TraerTodos')->add(new AccesoMiddleware(["socio"]));
   $group->get('/rol', \VentaControles::class . ':TraerVentasRol')->add(new RolMiddleware());
+});
+
+$app->group('/mesa', function(RouteCollectorProxy $group){
+  $group->post('[/]', \MesaControles::class . ':CargarUno')->add(new AccesoMiddleware(["socio"]));
+  $group->get('[/]', \MesaControles::class . ':TraerTodos');
 });
 
 $app->group('/preparar', function (RouteCollectorProxy $group) {

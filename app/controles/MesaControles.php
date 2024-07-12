@@ -12,7 +12,6 @@ class MesaControles extends Mesa implements IApiUsable{
         $estado = $parametros['estado'];
         $numero = $parametros['numero'];
 
-        // Creamos la Mesa
         $mesa = new Mesa();
         $mesa->estado = $estado;
         $mesa->numero = (int)$numero;
