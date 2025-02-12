@@ -46,10 +46,36 @@ class UsuarioControles extends Usuario implements IApiUsable{
           ->withHeader('Content-Type', 'application/json');
     }
 
+    public function ModificarUno($request, $response, $args){
+
+        $roles = array("mozo", "cervecero", "cocinero", "bartender","socio");
+        $estados = array("activo", "suspendido");
+
+        $parametros = json_decode($request->getBody()->getContents(), true);
+
+        $nombre = $parametros['nombre'];
+        $estado = $parametros['estado'];
+        $tipo = $parametros['tipo'];
+
+        if(Usuario::existeUsuario($nombre) &&  in_array($tipo, $roles) && in_array($estado, $estados)){
+            if(Usuario::modificarUsuario($nombre, $estado, $tipo)){
+                $payload = json_encode(array("Exito" => "Usuario modificado correctamente"));
+            }
+            else{
+                $payload = json_encode(array("Error" => "El usuario no se ha modificado" . $nombre . $estado . $tipo));
+            }
+        }else{
+            $payload = json_encode(array("Error" => "Datos ingresados incorrectos(nombre, estado, tipo)" . $nombre . $estado . $tipo));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     public function ComezarAPreparar($request, $response, $args){
         $rol = $request->getAttribute('rol');
         $id_usuario = $request->getAttribute('id');
-        $parametros = $request->getParsedBody();
+        $parametros = $parametros = json_decode($request->getBody()->getContents(), true);
         $demora = $parametros['demora'];
         $id = $parametros['id'];
 
@@ -58,26 +84,12 @@ class UsuarioControles extends Usuario implements IApiUsable{
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    public function ModificarUno($request, $response, $args){
+    public function FinalizarPreparacion($request, $response, $args){
+        $id_usuario = $request->getAttribute('id');
+        $parametros = $parametros = json_decode($request->getBody()->getContents(), true);
+        $id = $parametros['id'];
 
-        $roles = array("mozo", "cervecero", "cocinero", "bartender","socio");
-        $estados = array("activo", "suspendido");
-
-        $parametros = $request->getParsedBody();
-        $nombre = $parametros['nombre'];
-        $estado = $parametros['estado'];
-        $tipo = $parametros['tipo'];
-        if(Usuario::existeUsuario($nombre) &&  in_array($tipo, $roles) && in_array($estado, $estados)){
-            if(Usuario::modificarUsuario($nombre, $estado, $tipo)){
-                $payload = json_encode(array("Exito" => "Usuario modificado correctamente"));
-            }
-            else{
-                $payload = json_encode(array("Error" => "El usuario no se ha modificado"));
-            }
-        }else{
-            $payload = json_encode(array("Error" => "Datos ingresados incorrectos(nombre, estado, tipo)"));
-        }
-
+        $payload = Venta::finalizar($id, $id_usuario);
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

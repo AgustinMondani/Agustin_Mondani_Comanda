@@ -5,6 +5,7 @@ require_once './controles/ProductoControles.php';
 require_once './controles/OrdenControles.php';
 require_once './controles/VentaControles.php';
 require_once './controles/MesaControles.php';
+require_once './controles/EncuestaControles.php';
 require_once './base_datos/AccesoDatos.php';
 require_once './controles/JwtControles.php';
 require_once './middlewares/MwAcceso.php';

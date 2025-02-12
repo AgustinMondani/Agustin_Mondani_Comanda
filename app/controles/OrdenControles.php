@@ -17,7 +17,7 @@ class OrdenControles extends Orden implements IApiUsable{
 
         $productos = json_decode($productos, true);
 
-        if (json_last_error() === JSON_ERROR_NONE && is_array($productos)) {
+        if (json_last_error() === JSON_ERROR_NONE && is_array($productos) && Mesa::existeMesa($id_mesa) && Mesa::disponible($id_mesa)) {
             
             foreach ($productos as $producto) {
                 if(!Producto::existe($producto['producto'])){
@@ -37,7 +37,7 @@ class OrdenControles extends Orden implements IApiUsable{
                 $venta->altaVenta();
             }
         } else {
-            $payload = json_encode(array("Error" => "Formato de productos inválido"));
+            $payload = json_encode(array("Error" => "Formato de productos inválido , o mesa no disponible"));
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
@@ -45,10 +45,12 @@ class OrdenControles extends Orden implements IApiUsable{
         $orden = new Orden();
         $orden->codigo = $codigo;
         $orden->id_mesa = (int)$id_mesa;
-        $orden->estado = "Esperando";
+        $orden->estado = "espera";
         $orden->hora_pedido = date('H:i:s');
         $orden->cliente_nombre = $cliente_nombre;
         $orden->altaOrden();
+
+        Mesa::modificarMesa($id_mesa,"con cliente esperando pedido");
 
         $payload = json_encode(array("Exito" => "Orden creado con exito",
                                     "Codigo De Orden" => $codigo));
@@ -64,5 +66,115 @@ class OrdenControles extends Orden implements IApiUsable{
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
+    }
+
+    public function AgregarImagen($request, $response, $args)
+    {
+        $parametros = $request->getParsedBody();
+        $codigo = $parametros['codigo'];
+
+        if(Orden::existeOrden($codigo)){
+            try{
+                guardarImagen('../ImagenesDeOrdenes/', $codigo);
+                $payload = json_encode(array("imagenOrdenes" => "se vinculo correctamente la imagen"));
+            }
+            catch(Exception $ex){
+                $payload = json_encode(array("imagenOrdenes" => "Error al guardar la imagen"));
+            }
+        }
+        else{
+            $payload = json_encode(array("imagenOrdenes" => "la orden no existe"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function DemoraOrden($request, $response, $args)
+    {
+        $parametros = $request->getQueryParams();
+        $codigo = $parametros['codigo'];
+
+        if(Orden::existeOrden($codigo)){
+                $demora = Orden::demorayEstado($codigo);
+                if($demora[0] == 0){
+                    $payload = json_encode(array("Demora" => $demora[1]));
+                }
+                else{
+                    $payload = json_encode(array("Demora" => $demora[0]));
+                }
+        }
+        else{
+            $payload = json_encode(array("Demora" => "la orden no existe"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function ListaOrdenes($request, $response, $args){
+        Orden::actualizarDemorasOrdenes();
+        $ordenes = Orden::obtenerTodos();
+
+        $ordenesFiltradas = array_map(function($orden) {
+            return [
+                "codigo" => $orden->codigo,
+                "demora_orden" => $orden->demora_orden,
+                "estado" => $orden->estado
+            ];
+        }, $ordenes);
+
+        $payload = json_encode(array("Pedidos" => $ordenesFiltradas));
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function ServirOrden($request, $response, $args){
+
+        $parametros = json_decode($request->getBody()->getContents(), true);
+        $codigo = $parametros['codigo'];
+        Orden::actualizarDemorasOrdenes();
+
+        if(Orden::demorayEstado($codigo)[1] == "listo para servir"){
+
+            $mensaje = Venta::servir($codigo);
+            Orden::servir($codigo);
+            if(Mesa::modificarMesa(Orden::obtenerMesa($codigo), "con cliente comiendo")){
+                $payload = json_encode(array("Orden" => $mensaje));
+            }
+            else{
+                $payload = json_encode(array("Orden" => "No se puede actualizar la mesa"));
+            }
+        }
+        else{
+            $payload = json_encode(array("Orden" => "No esta lista para servir o el codigo no existe"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+
+    }
+
+    public static function CobrarOrden($request, $response, $args){
+
+        $parametros = json_decode($request->getBody()->getContents(), true);
+        $codigo = $parametros['codigo'];
+        $mesa_id = Orden::obtenerMesa($codigo);
+        $mensaje = null;
+
+        if(Mesa::estadoMesa($mesa_id) == "con cliente comiendo" && Orden::existeOrden($codigo)){
+            $cuenta = Orden::calcularCuenta($codigo);
+            if(Orden::cobrar($codigo, $cuenta));
+            Mesa::modificarMesa($mesa_id, "con cliente pagando");
+            $mensaje = 'Cuenta cobrada, valo: ' . $cuenta;
+        }
+        else{
+            $mensaje = 'no se puede cobrar la orden';
+        }
+
+        $payload = json_encode(array("Orden" => $mensaje));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

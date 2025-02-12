@@ -38,6 +38,18 @@ class Producto{
         return $consulta->fetchObject('Producto');
     }
 
+    public static function obtenerProductoNombre($nombre)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, precio, area_preparacion FROM producto WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+        $consulta->execute();
+
+        $producto = $consulta->fetchObject('Producto');
+
+        return $producto;
+    }
+
     public static function existeYActualizar($params)
     {
         

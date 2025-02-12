@@ -5,7 +5,7 @@ class Usuario{
     public $id;
     public $nombre;
     public $clave;
-    public $fecha_registro; //  #bartender #cerveceros #cocineros #mozos
+    public $fecha_registro;
     public $tipo;
     public $estado; // #supedndido #activo
 
