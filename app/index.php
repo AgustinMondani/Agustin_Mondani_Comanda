@@ -44,7 +44,8 @@ $app->group('/orden', function (RouteCollectorProxy $group) {
   $group->get('/lista', \OrdenControles::class . ':ListaOrdenes')->add(new AccesoMiddleware(["socio", "mozo"]));
   $group->put('/servir', \OrdenControles::class . ':ServirOrden')->add(new AccesoMiddleware(["mozo"]));
   $group->put('/cobrar', \OrdenControles::class . ':CobrarOrden')->add(new AccesoMiddleware(["mozo"]));
-
+  $group->get('/tarde', \OrdenControles::class . ':OrdenesEntregadasTarde')->add(new AccesoMiddleware(["socio"]));
+  $group->get('/aTiempo', \OrdenControles::class . ':OrdenesEntregadasATiempo')->add(new AccesoMiddleware(["socio"]));
 });
 
 $app->group('/ventas', function (RouteCollectorProxy $group) {
@@ -56,6 +57,7 @@ $app->group('/mesa', function(RouteCollectorProxy $group){
   $group->post('[/]', \MesaControles::class . ':CargarUno')->add(new AccesoMiddleware(["socio"]));
   $group->put('/modificar', \MesaControles::class . ':ModificarUno')->add(new RolMiddleware());
   $group->get('[/]', \MesaControles::class . ':TraerTodos')->add(new AccesoMiddleware(["socio", "mozo"]));
+  $group->get('/masUsada', \MesaControles::class . ':MasUsada')->add(new AccesoMiddleware(["socio"]));
 });
 
 $app->group('/preparar', function (RouteCollectorProxy $group) {

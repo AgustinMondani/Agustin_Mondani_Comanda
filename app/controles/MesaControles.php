@@ -66,6 +66,14 @@ class MesaControles extends Mesa implements IApiUsable{
             }
         }
 
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function MasUsada($request, $response, $args){
+
+        $mesa = Mesa::ordenadasPorUso()[0]['id_mesa'];
+        $payload = json_encode(array("Mesa mas usada ID:" => $mesa));
 
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');

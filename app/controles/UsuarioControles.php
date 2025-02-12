@@ -4,6 +4,7 @@ use Slim\Psr7\Request;
 
 require_once 'modelos/Usuario.php';
 require_once 'interfaces/IApiUsable.php';
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 class UsuarioControles extends Usuario implements IApiUsable{
     

@@ -1,6 +1,7 @@
 <?php
     include_once "base_datos/AccesoDatos.php";
     include_once "funciones/guardar_imagen.php";
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
 class Orden{
 
     public $id;
@@ -189,5 +190,23 @@ class Orden{
         $consulta->execute();
 
         return $consulta->rowCount();
+    }
+
+    public static function ordenesTarde(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+    
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT codigo as horario FROM orden WHERE horario_entrega IS NOT NULL AND horario_entrega > TIMESTAMPADD(MINUTE, demora_orden, hora_pedido)");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function ordenesATiempo(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+    
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT codigo as horario FROM orden WHERE horario_entrega IS NOT NULL AND horario_entrega <= TIMESTAMPADD(MINUTE, demora_orden, hora_pedido)");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 }    

@@ -69,4 +69,12 @@ class Mesa{
 
         return $consulta->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function ordenadasPorUso(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id_mesa, COUNT(*) AS usos FROM orden GROUP BY id_mesa ORDER BY usos DESC");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
 }    

@@ -3,6 +3,7 @@
 require_once 'modelos/Orden.php';
 require_once 'modelos/Venta.php';
 require_once 'interfaces/IApiUsable.php';
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 class OrdenControles extends Orden implements IApiUsable{
 
@@ -174,6 +175,22 @@ class OrdenControles extends Orden implements IApiUsable{
         }
 
         $payload = json_encode(array("Orden" => $mensaje));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function OrdenesEntregadasTarde($request, $response, $args){
+        $ordenes = Orden::ordenesTarde();
+
+        $payload = json_encode(array("Ordenes entregadas tarde" => $ordenes));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function OrdenesEntregadasATiempo($request, $response, $args){
+        $ordenes = Orden::ordenesATiempo();
+
+        $payload = json_encode(array("Ordenes entregadas tarde" => $ordenes));
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
