@@ -5,7 +5,7 @@ require_once 'modelos/Venta.php';
 require_once 'interfaces/IApiUsable.php';
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
-class OrdenControles extends Orden implements IApiUsable{
+class OrdenControles extends Orden{
 
     public function CargarUno($request, $response, $args)
     {
@@ -48,6 +48,7 @@ class OrdenControles extends Orden implements IApiUsable{
         $orden->id_mesa = (int)$id_mesa;
         $orden->estado = "espera";
         $orden->hora_pedido = date('H:i:s');
+        $orden->fecha = date('Y-m-d');
         $orden->cliente_nombre = $cliente_nombre;
         $orden->altaOrden();
 

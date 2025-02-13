@@ -19,6 +19,15 @@ class Producto{
         return $objAccesoDatos->obtenerUltimoId();
     }
 
+    public static function borrarProducto($id_producto){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("DELETE FROM producto WHERE id = :id_producto");
+        $consulta->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->rowCount();
+    }
+
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();

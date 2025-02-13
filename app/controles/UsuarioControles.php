@@ -37,14 +37,27 @@ class UsuarioControles extends Usuario implements IApiUsable{
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public function BorrarUno($request, $response, $args){
+
+        $id_usuario = $args['id_usuario'];
+        if(Usuario::borrarUsuario($id_usuario)){
+            $payload = json_encode(array("EXITO:" => "Usuario borrado con exito"));
+        }
+        else{
+            $payload = json_encode(array("ERROR" => "El usuario no se pudo eliminar"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     public function TraerTodos($request, $response, $args)
     {
         $lista = Usuario::obtenerTodos();
         $payload = json_encode(array("listaUsuario" => $lista));
 
         $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
     public function ModificarUno($request, $response, $args){
@@ -63,10 +76,10 @@ class UsuarioControles extends Usuario implements IApiUsable{
                 $payload = json_encode(array("Exito" => "Usuario modificado correctamente"));
             }
             else{
-                $payload = json_encode(array("Error" => "El usuario no se ha modificado" . $nombre . $estado . $tipo));
+                $payload = json_encode(array("Error" => "El usuario no se ha modificado"));
             }
         }else{
-            $payload = json_encode(array("Error" => "Datos ingresados incorrectos(nombre, estado, tipo)" . $nombre . $estado . $tipo));
+            $payload = json_encode(array("Error" => "Datos ingresados incorrectos(nombre, estado, tipo)" ));
         }
 
         $response->getBody()->write($payload);
@@ -91,6 +104,49 @@ class UsuarioControles extends Usuario implements IApiUsable{
         $id = $parametros['id'];
 
         $payload = Venta::finalizar($id, $id_usuario);
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function TraerFechas($request, $response, $args)
+    {
+        $parametros = $request->getQueryParams();
+
+        $nombre = $parametros['nombre'];
+        $lista = Usuario::fechasRegistro($nombre);
+        $payload = json_encode(array("Fechas Registros" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function obtenerOperaciones($request, $response, $args){
+
+        $operaciones = Usuario::actividadUsuarios();
+        $payload = json_encode(array("Operaciones por usuarios:" => $operaciones));
+    
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function obtenerOperacionesPorSector($request, $response, $args){
+
+        $operaciones = Usuario::actividadUsuarios();
+        $operacionesPorSector = [];
+
+        foreach ($operaciones as $operacion) {
+            $sector = $operacion['rol'];
+            $cantidadOperaciones = $operacion['operaciones'];
+    
+            if (isset($operacionesPorSector[$sector])) {
+                $operacionesPorSector[$sector] += $cantidadOperaciones;
+            } else {
+                $operacionesPorSector[$sector] = $cantidadOperaciones;
+            }
+        }
+
+        $payload = json_encode(array("Operaciones por sector:" => $operacionesPorSector));
+    
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

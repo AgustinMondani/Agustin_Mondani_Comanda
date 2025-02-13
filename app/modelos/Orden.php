@@ -11,19 +11,21 @@ class Orden{
     public $hora_pedido; 
     public $demora_orden;
     public $cliente_nombre;
+    public $fecha;
 
     public function altaOrden()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos
-        ->prepararConsulta("INSERT INTO orden (codigo, id_mesa, estado, hora_pedido, cliente_nombre)
-         VALUES (:codigo, :id_mesa, :estado, :hora_pedido, :cliente_nombre)");
+        ->prepararConsulta("INSERT INTO orden (codigo, id_mesa, estado, hora_pedido, cliente_nombre, fecha)
+         VALUES (:codigo, :id_mesa, :estado, :hora_pedido, :cliente_nombre, :fecha)");
 
         $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
         $consulta->bindValue(':id_mesa', $this->id_mesa, PDO::PARAM_INT);
         $consulta->bindValue(':estado', $this->estado);
         $consulta->bindValue(':hora_pedido', $this->hora_pedido);
         $consulta->bindValue(':cliente_nombre', $this->cliente_nombre);
+        $consulta->bindValue(':fecha', $this->fecha);
         $consulta->execute();
 
         try{

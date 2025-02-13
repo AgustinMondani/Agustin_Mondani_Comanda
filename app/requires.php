@@ -11,3 +11,4 @@ require_once './controles/JwtControles.php';
 require_once './middlewares/MwAcceso.php';
 require_once './middlewares/MwRol.php';
 require_once './funciones/descargaCSV.php';
+require_once './funciones/logoPDF.php';

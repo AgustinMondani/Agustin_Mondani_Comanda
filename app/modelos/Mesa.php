@@ -16,6 +16,16 @@ class Mesa{
 
         return $objAccesoDatos->obtenerUltimoId();
     }
+
+    public static function borrarMesa($id_mesa){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("DELETE FROM mesa WHERE id = :id_mesa");
+        $consulta->bindValue(':id_mesa', $id_mesa, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->rowCount();
+    }
+
     public static function disponible($id_mesa){
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id FROM mesa WHERE id = :id AND estado = 'abierta'");
@@ -76,5 +86,24 @@ class Mesa{
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function ordenadasPorFacturacion(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id_mesa, COALESCE(MIN(cuenta), 0) AS facturacionBarata FROM orden GROUP BY id_mesa ORDER BY facturacionBarata ASC");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function facturacionEntreFechas($fecha1, $fecha2, $id_mesa){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id_mesa, COALESCE(SUM(cuenta), 0) AS total_facturacion FROM orden WHERE id_mesa = :id_mesa AND fecha BETWEEN :fecha_inicio AND :fecha_fin GROUP BY id_mesa");
+        $consulta->bindValue(':id_mesa', $id_mesa, PDO::PARAM_INT);
+        $consulta->bindValue(':fecha_inicio', $fecha1);
+        $consulta->bindValue(':fecha_fin', $fecha2);
+        $consulta->execute();
+
+        return $consulta->fetch(PDO::FETCH_ASSOC);
     }
 }    

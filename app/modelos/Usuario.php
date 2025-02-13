@@ -9,6 +9,14 @@ class Usuario{
     public $tipo;
     public $estado; // #supedndido #activo
 
+    public static function loguear($id_usuario){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO ingresos (id_usuario, hora_ingreso) VALUES (:id_usuario, :hora_ingreso)");
+        $consulta->bindValue(':id_usuario', $id_usuario);
+        $consulta->bindValue(':hora_ingreso', date('Y-m-d H:i:s'));
+        $consulta->execute();
+    }
+
     public function altaUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
@@ -22,6 +30,15 @@ class Usuario{
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
+    }
+
+    public static function borrarUsuario($id_usuario){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("DELETE FROM usuario WHERE id = :id_usuario");
+        $consulta->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->rowCount();
     }
 
     public static function modificarUsuario($nombre, $estado, $tipo){
@@ -65,5 +82,33 @@ class Usuario{
         } else {
             return false;
         }
+    }
+
+    public static function FechasRegistro($usuario){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id FROM usuario WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $usuario, PDO::PARAM_STR);
+        $consulta->execute();
+        $usuario_id = $consulta->fetch(PDO::FETCH_COLUMN);
+
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT hora_ingreso FROM ingresos WHERE id_usuario = :id_usuario");
+        $consulta->bindValue(':id_usuario', $usuario_id, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public static function actividadUsuarios(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+    
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT v.id_usuario, u.tipo as rol , COUNT(*) AS operaciones FROM venta v JOIN usuario u ON v.id_usuario = u.id GROUP BY id_usuario, u.tipo");
+        $consulta->execute();
+        $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    
+        usort($resultados, function($a, $b) {
+            return strcmp($a['rol'], $b['rol']);
+        });
+    
+        return $resultados;
     }
 }

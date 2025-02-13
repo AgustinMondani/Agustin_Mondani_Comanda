@@ -149,5 +149,12 @@ class Venta{
         return $ventas;
     }
 
+    public static function ObtenerCantidadesVendidas(){
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT producto, SUM(cantidad) AS total_vendido FROM venta GROUP BY producto");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
     

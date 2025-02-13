@@ -1,6 +1,7 @@
 <?php
 
 require_once './jwt/AutentificadorJWT.php';
+require_once './modelos/Usuario.php';
 
 class JwtControles{
     public function TokenLogin($request, $response, $args){
@@ -15,6 +16,7 @@ class JwtControles{
                         );
 
             $token = AutentificadorJWT::CrearToken($datos);
+            Usuario::loguear($usuario['id']);
             $payload = json_encode(array('token' => $token));
         } else {
             $payload = json_encode(array('error' => 'Usuario o contraseña incorrectos'));
