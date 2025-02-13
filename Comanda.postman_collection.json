@@ -1,0 +1,1565 @@
+{
+	"info": {
+		"_postman_id": "a677555d-5202-42a6-86e6-1d5a91d20d96",
+		"name": "Comanda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34250234"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Logueo",
+					"item": [
+						{
+							"name": "Logueo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Socio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mozo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cocinero",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bartender",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cervecero",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.response.json());\r",
+											"\r",
+											"let token = pm.response.json().token;\r",
+											"\r",
+											"pm.environment.set(\"token\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "usuario",
+											"value": "agusSocio",
+											"type": "text"
+										},
+										{
+											"key": "contraseña",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Crear Usuario(SOLO ADMIN)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Raul"
+								},
+								{
+									"key": "clave",
+									"value": "likina1"
+								},
+								{
+									"key": "tipo",
+									"value": "cocineros"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuario?nombre=Agustin&clave=likina1&tipo=cocineros",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuario"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Agustin"
+								},
+								{
+									"key": "clave",
+									"value": "likina1"
+								},
+								{
+									"key": "tipo",
+									"value": "cocineros"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "nombre",
+								"value": "AleCervecero"
+							},
+							{
+								"key": "estado",
+								"value": "suspendido"
+							},
+							{
+								"key": "tipo",
+								"value": "cervecero",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "AleCervecero"
+								},
+								{
+									"key": "estado",
+									"value": "suspendio"
+								},
+								{
+									"key": "tipo",
+									"value": "cocinero",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuario/modificar?nombre=AleCervecero&estado=suspendido&tipo=cervecero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuario",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "AleCervecero"
+								},
+								{
+									"key": "estado",
+									"value": "suspendido"
+								},
+								{
+									"key": "tipo",
+									"value": "cervecero"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/mesa/borrar/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"borrar",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Operaciones Sector",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuario/operacionesSector",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuario",
+								"operacionesSector"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Operaciones Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuario/operaciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuario",
+								"operaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dias De Ingreso",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuario/ingreso?nombre=agusMozo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuario",
+								"ingreso"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "agusMozo"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "Alta Mesa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "estado",
+									"value": "cerrada"
+								},
+								{
+									"key": "numero",
+									"value": "37",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/mesa?estado=abierta&numero=60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "abierta"
+								},
+								{
+									"key": "numero",
+									"value": "60"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Mesas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Mas Usada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/mesa/masUsada",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"masUsada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Menos Facturo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/mesa/facturacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"facturacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Faturacion Entre Fechas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/mesa/facturacionFechas?id_mesa=37&fecha1=2025-02-08&fecha2=2025-02-18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"facturacionFechas"
+							],
+							"query": [
+								{
+									"key": "id_mesa",
+									"value": "37"
+								},
+								{
+									"key": "fecha1",
+									"value": "2025-02-08"
+								},
+								{
+									"key": "fecha2",
+									"value": "2025-02-18"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Mesa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_mesa\" : 30,\r\n    \"estado\" : \"abierta\",\r\n    \"numero\" : 37\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/mesa/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Mesa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/mesa/borrar/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesa",
+								"borrar",
+								"38"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ordenes",
+			"item": [
+				{
+					"name": "Cargar Orden C/img",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_mesa",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "productos",
+									"value": "[\n        {\"producto\": \"golden\", \"cantidad\": 3},\n        {\"producto\": \"rabas\", \"cantidad\": 2}\n    ]",
+									"type": "text"
+								},
+								{
+									"key": "cliente_nombre",
+									"value": "luciano",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/orden",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular imagen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								},
+								{
+									"key": "Imagen",
+									"type": "file",
+									"src": "postman-cloud:///1ef3a965-0fa6-4fb0-95af-bff6555464d2"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/imagen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"imagen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Demora",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/demora?codigo=SCT5W&mesa=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"demora"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "SCT5W"
+								},
+								{
+									"key": "mesa",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado de Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/orden/lista",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"lista"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar ordenes por Rol",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/ventas/rol",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"ventas",
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comenzar Preparacion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 28,\r\n  \"demora\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/preparar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"preparar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Preparacion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 28,\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/preparar/finalizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"preparar",
+								"finalizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Servir Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"DC2K8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/servir",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"servir"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cobrar Orden",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\" : \"SCT5W\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/cobrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"cobrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregadas Tarde",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/tarde",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"tarde"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregadas a Tiempo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "UMYRH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/orden/demora?codigo=SCT5W&mesa=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"orden",
+								"demora"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "SCT5W"
+								},
+								{
+									"key": "mesa",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Carta Productos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/producto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Menos Vendidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/producto/menosVendido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"producto",
+								"menosVendido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "corona",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "8000",
+									"type": "text"
+								},
+								{
+									"key": "area_preparacion",
+									"value": "cervecero",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/producto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"producto"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Mesa Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/producto/borrar/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"producto",
+								"borrar",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Producto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\" : \"corona\",\r\n    \"precio\" : 8000,\r\n    \"area_preparacion\" : \"cervecero\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/producto/modificar?nombre=corona&precio=8000&area_preparacion=cervecero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"producto",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "corona"
+								},
+								{
+									"key": "precio",
+									"value": "8000"
+								},
+								{
+									"key": "area_preparacion",
+									"value": "cervecero"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "DescargarCSV",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/descargar/csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"descargar",
+								"csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Descargar Logo PDF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/descargar/logoPDF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"descargar",
+								"logoPDF"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Encuestas",
+			"item": [
+				{
+					"name": "Encuesta Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "DC2K8",
+									"type": "text"
+								},
+								{
+									"key": "id_mesa",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "mesa",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "restaurante",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "mozo",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "cocinero",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "comentario",
+									"value": "dfdgfgdfgdfdgg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/encuesta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"encuesta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mejores Encuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "DC2K8",
+									"type": "text"
+								},
+								{
+									"key": "id_mesa",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "mesa",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "restaurante",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "mozo",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "cocinero",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "comentario",
+									"value": "dfdgfgdfgdfdgg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/encuesta/mejores?cantidad=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"encuesta",
+								"mejores"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
